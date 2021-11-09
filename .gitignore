@@ -1,0 +1,6 @@
+*.tar
+.idea/ 
+cmake-build-debug/
+
+FabLab_oil_and_gas/Equations_of_state/solution/untitled0.py
+FabLab_oil_and_gas/Equations_of_state/solution/untitled0.py
