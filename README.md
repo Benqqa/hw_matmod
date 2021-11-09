@@ -1,2 +1,2 @@
 # hw_matmod
-Variant #2
+Variant #1
