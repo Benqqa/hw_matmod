@@ -19,21 +19,23 @@ string * StringToMass(string base_str, char delim, int size){
         {
             mass_str[i] = temp;
             i++;
+            if(i==size){
+                break;
+            }
         }
         pos += temp.size() + delim_size;
     }
     return mass_str;
 }
-std::tuple<int, int> step(int dividend, int divisor) {
-    return  std::make_tuple(dividend / divisor, dividend % divisor);
-}
 //napr = 1 напрво - true; налево - false
+double y_tochky_vstrechy(double y_0, int napr, double v_y, double v_x, double x, double x_0, double x_d, double g, double v_0){
+    double new_t=y_0+napr*(v_y/v_x)*(x-x_0-2*x_d)-g*(pow(x-x_0-2*x_d,2)/(2*pow(v_0,2)));
+    return std::round(new_t * 10000000000.0) / 10000000000.0;
+}
 void polet(string file_name, int mass_size,string *mass_stolbov,int index=0,int napr=1, double g=9.81, double y_0=1,double x_0=0, double x_d=0, double v_x=3, double v_y=1, double v_0=3.162277, int nomer_stolba=0){
     if(index == 0){// первый вход - наполним массив столбов до первого пападания
         std::string line;
         //std::ifstream in(file_name); // окрываем файл для чтения
-        if (true)
-        {
             //string *mass_stolbov = new string[mass_size];
 
             int k= 0;
@@ -48,7 +50,12 @@ void polet(string file_name, int mass_size,string *mass_stolbov,int index=0,int 
                     string *values_start=StringToMass("0 "+line,' ',2);
                     y_0=atof( values_start[1].c_str() );
                     x_0=atof( values_start[0].c_str() );
+
                     delete[] values_start;
+                    if(line.length() == 0){
+                        std::cout <<"0" << std::endl;
+                        break;
+                    }
                     continue;
                 }
                 if(k == 2){
@@ -57,15 +64,20 @@ void polet(string file_name, int mass_size,string *mass_stolbov,int index=0,int 
                     v_x=atof( values_start[0].c_str() );
                     v_y=atof( values_start[1].c_str() );
                     v_0= sqrt(pow(v_x,2)+pow(v_y,2));
+
                     delete[] values_start;
+                    if(line.length() == 0 || abs(v_x)+abs(v_y)==0 ){
+                        std::cout <<"0" << std::endl;
+                        break;
+                    }
                     continue;
                 }
                 string *values=StringToMass(line,' ',2);
                 x=atof( values[0].c_str() );
                 y=atof( values[1].c_str() );
                 //проверка столбика
-                new_y=y_0+napr*(v_y/v_x)*(x-x_0-2*x_d)-g*(pow(x-x_0-2*x_d,2)/(2*pow(v_0,2)));
-                if(x==x_0){
+                new_y=y_tochky_vstrechy(y_0, napr, v_y,  v_x,  x,  x_0,  x_d,  g,  v_0);
+                if(x<=x_0){
                     std::cout <<"0" << std::endl;
                     break;
                 }
@@ -114,7 +126,6 @@ void polet(string file_name, int mass_size,string *mass_stolbov,int index=0,int 
                 }
                 delete[] values;
             }
-        }
     }
 //-----------------------------------------------------------------------------------------------
     else{
@@ -133,7 +144,7 @@ void polet(string file_name, int mass_size,string *mass_stolbov,int index=0,int 
             x=atof( values[0].c_str() );
             y=atof( values[1].c_str() );
             //проверка столбика
-            new_y=y_0+napr*(v_y/v_x)*(x-x_0-2*x_d)-g*(pow(x-x_0-2*x_d,2)/(2*pow(v_0,2)));
+            new_y=y_tochky_vstrechy(y_0, napr, v_y,  v_x,  x,  x_0,  x_d,  g,  v_0);
             if(x==x_0){
                 std::cout <<"0" << std::endl;
                 break;
@@ -216,6 +227,9 @@ int main(int argc, char** argv) {
                 }
                 m++;
             }
+        }
+        if(m <=2){
+            std::cout <<"0" << std::endl;
         }
         string *mass_stolbov = new string[m];
         mass_stolbov[0]=mass_stolbov_1[0];
