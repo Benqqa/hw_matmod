@@ -45,21 +45,13 @@ int main() {
     std::ifstream in("in.txt"); // окрываем файл для чтения
     if (in.is_open())
     {
-        while (getline(in, line))
+        double x=0; double y=0;
+        in >> x >> y;
+        xn=(-1)*x;
+        yn=(-1)*y;
+        //std::<<  <<::endl;
+        while (in >> x >> y)
         {
-            if(line.length() == 0 || line.length() == 1){
-                continue;
-            }
-            string *values=StringToMass(line,' ',2);
-            int x=atoi( values[0].c_str() );
-            int y=atoi( values[1].c_str() );
-            if(isFirstLine){
-                isFirstLine= false;
-                xn=(-1)*x;
-                yn=(-1)*y;
-            }
-            else{
-
                 //растояние
                 double dist;
                 if(xn !=0 && yn !=0){
@@ -107,9 +99,8 @@ int main() {
                         }
                     }
                 }
-            }
 
-            delete[] values;
+            //delete[] values;
         }
     }
     in.close();     // закрываем файл
