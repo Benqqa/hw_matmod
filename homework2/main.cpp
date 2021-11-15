@@ -40,92 +40,96 @@ void polet(string file_name, int mass_size,string *mass_stolbov,int index=0,int 
 
             int k= 0;
             double x,y,new_y;
-            while (true){
-                line =mass_stolbov[k];
+        std::ifstream in(file_name); // окрываем файл для чтения
+        if (in.is_open()) {
+            while (getline(in, line)) // перебераем столбы
+            {
+                /*std::cout<<line<<::endl;*/
+                //line =mass_stolbov[k];
                 //кусок кода надо формить красиво
                 k++;
 
-                if(k == 1){
-                    mass_stolbov[k-1]="0 "+line;
-                    string *values_start=StringToMass("0 "+line,' ',2);
-                    y_0=atof( values_start[1].c_str() );
-                    x_0=atof( values_start[0].c_str() );
+                if (k == 1) {
+                    mass_stolbov[k - 1] = "0 " + line;
+                    string *values_start = StringToMass("0 " + line, ' ', 2);
+                    y_0 = atof(values_start[1].c_str());
+                    x_0 = atof(values_start[0].c_str());
 
                     delete[] values_start;
-                    if(line.length() == 0){
-                        std::cout <<"0" << std::endl;
+                    if (line.length() == 0) {
+                        std::cout << "0" << std::endl;
                         break;
                     }
                     continue;
                 }
-                if(k == 2){
-                    string *values_start=StringToMass(line,' ',2);
-                    x_d=0; // коэф смещения
-                    v_x=atof( values_start[0].c_str() );
-                    v_y=atof( values_start[1].c_str() );
-                    v_0= sqrt(pow(v_x,2)+pow(v_y,2));
+                if (k == 2) {
+                    string *values_start = StringToMass(line, ' ', 2);
+                    x_d = 0; // коэф смещения
+                    v_x = atof(values_start[0].c_str());
+                    v_y = atof(values_start[1].c_str());
+                    v_0 = sqrt(pow(v_x, 2) + pow(v_y, 2));
 
                     delete[] values_start;
-                    if(line.length() == 0 || abs(v_x)+abs(v_y)==0 ){
-                        std::cout <<"0" << std::endl;
+                    if (line.length() == 0 || abs(v_x) + abs(v_y) == 0) {
+                        std::cout << "0" << std::endl;
                         break;
                     }
                     continue;
                 }
-                string *values=StringToMass(line,' ',2);
-                x=atof( values[0].c_str() );
-                y=atof( values[1].c_str() );
+                string *values = StringToMass(line, ' ', 2);
+                x = atof(values[0].c_str());
+                y = atof(values[1].c_str());
                 //проверка столбика
-                new_y=y_tochky_vstrechy(y_0, napr, v_y,  v_x,  x,  x_0,  x_d,  g,  v_0);
-                if(x<=x_0){
-                    std::cout <<"0" << std::endl;
+                new_y = y_tochky_vstrechy(y_0, napr, v_y, v_x, x, x_0, x_d, g, v_0);
+                if (x <= x_0) {
+                    std::cout << "0" << std::endl;
                     break;
                 }
-                if(new_y <= 0){
-                    std::cout <<to_string(nomer_stolba) << std::endl;
+                if (new_y <= 0) {
+                    std::cout << to_string(nomer_stolba) << std::endl;
                     break;
                 }
-                if(new_y<=y){ // попал
-                    mass_stolbov[k-2]=line;
-                    x_d=x-x_d; //смещение
+                if (new_y <= y) { // попал
+                    mass_stolbov[k - 2] = line;
+                    x_d = x - x_d; //смещение
                     //рекурсим
                     index++;
-                    napr=-1*napr;
+                    napr = -1 * napr;
                     //тут надо развернуть массив координат столбов
-                    if(k-1!= 2){
-                        string *mass_stolbov_2 = new string[k-1];
-                        for(int i=0; i<k-1; i++){
-                            mass_stolbov_2[i]=mass_stolbov[i];
+                    if (k - 1 != 2) {
+                        string *mass_stolbov_2 = new string[k - 1];
+                        for (int i = 0; i < k - 1; i++) {
+                            mass_stolbov_2[i] = mass_stolbov[i];
                         }
                         delete[] mass_stolbov;
-                        string *mass_stolbov_2_1 = new string[k-1];
-                        for(int i=0; i<k-1; i++){
-                            mass_stolbov_2_1[i]=mass_stolbov_2[k-2-i];
+                        string *mass_stolbov_2_1 = new string[k - 1];
+                        for (int i = 0; i < k - 1; i++) {
+                            mass_stolbov_2_1[i] = mass_stolbov_2[k - 2 - i];
                         }
-                        for(int i=0; i<k-1; i++){
-                            mass_stolbov_2[i]=mass_stolbov_2_1[i];
+                        for (int i = 0; i < k - 1; i++) {
+                            mass_stolbov_2[i] = mass_stolbov_2_1[i];
                         }
                         delete[] mass_stolbov_2_1;
-                        mass_size=k-1;
+                        mass_size = k - 1;
                         delete[] values;
-                        polet(file_name,mass_size,mass_stolbov_2,index,napr, g, y_0, x_0,  x_d,  v_x,  v_y,  v_0, nomer_stolba);
+                        polet(file_name, mass_size, mass_stolbov_2, index, napr, g, y_0, x_0, x_d, v_x, v_y, v_0,
+                              nomer_stolba);
+                        break;
+                    } else {
+                        std::cout << to_string(nomer_stolba) << std::endl;
                         break;
                     }
-                    else{
-                        std::cout <<to_string(nomer_stolba) << std::endl;
-                        break;
-                    }
-                }
-                else{ // не попал
-                    nomer_stolba+=napr*1;
+                } else { // не попал
+                    nomer_stolba += napr * 1;
                     //тут надо слхранить координаты в массив
-                    mass_stolbov[k-2]=line;
-                    if(k-1 == mass_size-1){
-                        std::cout <<to_string(nomer_stolba) << std::endl;
+                    mass_stolbov[k - 2] = line;
+                    if (k - 1 == mass_size - 1) {
+                        std::cout << to_string(nomer_stolba) << std::endl;
                     }
                 }
                 delete[] values;
             }
+        }
     }
 //-----------------------------------------------------------------------------------------------
     else{
@@ -209,14 +213,14 @@ int main(int argc, char** argv) {
     std::ifstream in(argv[1]); // окрываем файл для чтения
     if (in.is_open()) {
         int m = 0; //mass_size
-        map <double, double> mp;
+       // map <double, double> mp;
         double x,y;
-        string mass_stolbov_1[2];
+        // string mass_stolbov_1[2];
         while (getline(in, line)) // перебераем столбы
         {
             if (line.length() != 0) {
                 //std::cout <<"line: " +line<< std::endl;
-                string *values=StringToMass(line,' ',2);
+                /*string *values=StringToMass(line,' ',2);
                 y=atof( values[1].c_str() );
                 x=atof( values[0].c_str() );
                 if(!(m == 0 || m == 1)) {
@@ -224,7 +228,7 @@ int main(int argc, char** argv) {
                 }
                 else{
                     mass_stolbov_1[m]=line;
-                }
+                }*/
                 m++;
             }
         }
@@ -232,7 +236,8 @@ int main(int argc, char** argv) {
             std::cout <<"0" << std::endl;
         }
         string *mass_stolbov = new string[m];
-        mass_stolbov[0]=mass_stolbov_1[0];
+
+       /* mass_stolbov[0]=mass_stolbov_1[0];
         mass_stolbov[1]=mass_stolbov_1[1];
         int o=0;
         for(auto it = mp.begin(); it != mp.end(); ++it){
