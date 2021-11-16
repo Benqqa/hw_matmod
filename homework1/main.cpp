@@ -55,7 +55,7 @@ int main() {
                 //растояние
                 double dist;
                 if(xn !=0 && yn !=0){
-                    dist=(abs(-1*(x)/xn+y/yn)/sqrt(pow(1/xn,2)+pow(1/yn,2)));
+                    dist=(abs(-1*(x)/xn+y/yn)/sqrt((1/xn)*(1/xn)+(1/yn)*(1/yn)));
 					dist = std::round(dist * 10000000000.0) / 10000000000.0;
                    // dist=(abs((yn-0)*x-(xn-0)*y+xn*0-yn*0))/(sqrt(pow(xn-0,2)+pow(yn-0,2))); //вектор как прямая заданная 2мя точками
                 }
