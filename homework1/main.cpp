@@ -32,7 +32,7 @@ int main() {
                     }
                 }
     }
-    //in.close();     // закрываем файл
+    in.close();     // закрываем файл
     std::cout << "Leftmost: " << fx_l << " " << fy_l << "\n";
     std::cout << "Rightmost: " << fx_r << " " << fy_r << "\n";
 
