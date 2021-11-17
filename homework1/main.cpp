@@ -4,6 +4,7 @@
 #include <valarray>
 
 using namespace std;
+/*
 string * StringToMass(string base_str, char delim, int size){
 
     size_t pos = 0;
@@ -30,10 +31,7 @@ string * StringToMass(string base_str, char delim, int size){
     }
 
     return mass_str;
-}
-std::tuple<int, int> step(int dividend, int divisor) {
-    return  std::make_tuple(dividend / divisor, dividend % divisor);
-}
+}*/
 int main() {
     std::string line;
     double xn,yn,fx_r,fy_r,fx_l,fy_l;
@@ -50,57 +48,33 @@ int main() {
         xn=(-1)*x;
         yn=(-1)*y;
         //std::<<  <<::endl;
+        double dist;
         while (in >> x >> y)
         {
                 //растояние
-                double dist;
+
                 if(xn !=0 && yn !=0){
                     dist=(abs(-1*(x)/xn+y/yn)/sqrt((1/xn)*(1/xn)+(1/yn)*(1/yn)));
 					dist = std::round(dist * 10000000000.0) / 10000000000.0;
-                   // dist=(abs((yn-0)*x-(xn-0)*y+xn*0-yn*0))/(sqrt(pow(xn-0,2)+pow(yn-0,2))); //вектор как прямая заданная 2мя точками
                 }
                 else{
-                    if(xn ==0){
-                        dist= x;
-                        //dist=sqrt(pow(x-xn,2)+pow(y-yn,2)); //как растояние между 2мя точками
-                    }
-                    else{
-                        dist=y;
-                    }
+                    (xn ==0)? dist =x:dist= y;
                 }
                 //<0 - справа:
                 if(((xn-0)*(y-0)-(yn-0)*(x-0))>=0){
-                    if(isTwiceLine_r){
-                        isTwiceLine_r= false;
+                    if(dist>=max_d_r){
                         max_d_r=dist;
                         fx_r=x;
                         fy_r=y;
                     }
-                    else{
-                        if(dist>=max_d_r){
-                            max_d_r=dist;
-                            fx_r=x;
-                            fy_r=y;
-                        }
-                    }
                 }//>0 - слева
                 else{
-                    if(isTwiceLine_l){
-                        isTwiceLine_l= false;
+                    if(dist>=max_d_l){
                         max_d_l=dist;
                         fx_l=x;
                         fy_l=y;
                     }
-                    else{
-                        if(dist>=max_d_l){
-                            max_d_l=dist;
-                            fx_l=x;
-                            fy_l=y;
-                        }
-                    }
                 }
-
-            //delete[] values;
         }
     }
     in.close();     // закрываем файл
