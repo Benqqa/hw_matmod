@@ -34,16 +34,12 @@ string * StringToMass(string base_str, char delim, int size){
 }*/
 int main() {
     std::string line;
-    double xn,yn,fx_r,fy_r,fx_l,fy_l;
-    double finde_value=1;
+    int xn,yn,fx_r,fy_r,fx_l,fy_l;
     double max_d_r=0;
     double max_d_l=0;
-    bool isFirstLine= true;
-    bool isTwiceLine_r= true,isTwiceLine_l= true;
     std::ifstream in("in.txt"); // окрываем файл для чтения
-    if (in.is_open())
-    {
-        double x=0; double y=0;
+
+        int x=0; int y=0;
         in >> x >> y;
         xn=(-1)*x;
         yn=(-1)*y;
@@ -75,7 +71,6 @@ int main() {
                         fy_l=y;
                     }
                 }
-        }
     }
     in.close();     // закрываем файл
     std::cout << "Leftmost: " << fx_l << " " << fy_l << "\n";
