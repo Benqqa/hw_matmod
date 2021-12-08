@@ -8,7 +8,6 @@ using namespace std;
 string * StringToMass(string base_str, char delim, int size){
     size_t pos = 0;
     size_t base_str_size = base_str.size();
-    //size_t delim_size = delim.size();
     size_t delim_size=1;
     string temp;
     int i=0;
@@ -35,17 +34,13 @@ double y_tochky_vstrechy(double y_0, int napr, double v_y, double v_x, double x,
 void polet(string file_name, int mass_size,string *mass_stolbov,int index=0,int napr=1, double g=9.81, double y_0=1,double x_0=0, double x_d=0, double v_x=3, double v_y=1, double v_0=3.162277, int nomer_stolba=0){
     if(index == 0){// первый вход - наполним массив столбов до первого пападания
         std::string line;
-        //std::ifstream in(file_name); // окрываем файл для чтения
-            //string *mass_stolbov = new string[mass_size];
-
             int k= 0;
             double x,y,new_y;
         std::ifstream in(file_name); // окрываем файл для чтения
         if (in.is_open()) {
+            // переписать формат ввода....
             while (getline(in, line)) // перебераем столбы
             {
-                /*std::cout<<line<<::endl;*/
-                //line =mass_stolbov[k];
                 //кусок кода надо формить красиво
                 k++;
 
@@ -213,22 +208,9 @@ int main(int argc, char** argv) {
     std::ifstream in(argv[1]); // окрываем файл для чтения
     if (in.is_open()) {
         int m = 0; //mass_size
-       // map <double, double> mp;
-        double x,y;
-        // string mass_stolbov_1[2];
         while (getline(in, line)) // перебераем столбы
         {
             if (line.length() != 0) {
-                //std::cout <<"line: " +line<< std::endl;
-                /*string *values=StringToMass(line,' ',2);
-                y=atof( values[1].c_str() );
-                x=atof( values[0].c_str() );
-                if(!(m == 0 || m == 1)) {
-                    mp.insert(pair<double, double>(x, y));
-                }
-                else{
-                    mass_stolbov_1[m]=line;
-                }*/
                 m++;
             }
         }
@@ -236,24 +218,6 @@ int main(int argc, char** argv) {
             std::cout <<"0" << std::endl;
         }
         string *mass_stolbov = new string[m];
-
-       /* mass_stolbov[0]=mass_stolbov_1[0];
-        mass_stolbov[1]=mass_stolbov_1[1];
-        int o=0;
-        for(auto it = mp.begin(); it != mp.end(); ++it){
-            o++;
-            mass_stolbov[1+o]= to_string(it->first)+" "+to_string(it->second);
-        }
-
-        /*cout << "mp contains:\n";
-        for (auto it = mp.begin(); it != mp.end(); ++it)///вывод на экран
-        {
-            cout << it->first << " : " << it->second << endl;
-        }
-        for(int i=0;i<m;i++){
-            cout << mass_stolbov[i] << endl;
-        }*/
-
         polet(argv[1],m, mass_stolbov);
     }
     //
