@@ -21,7 +21,8 @@ int main() {
                 //растояние
                 double dist;
                 if(xn !=0 && yn !=0){
-                    dist=(abs(-1*(x)/xn+y/yn)/sqrt((1/xn)*(1/xn)+(1/yn)*(1/yn)));
+                    dist = abs(xn*x-yn*y)/sqrt(xn*xn+yn*yn);
+                   // dist=(abs(-1*(x)/xn+y/yn)/sqrt((1/xn)*(1/xn)+(1/yn)*(1/yn)));
 					//dist = std::round(dist * 10000000000.0) / 10000000000.0;
                 }
                 else{
