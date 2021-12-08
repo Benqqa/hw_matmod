@@ -13,18 +13,13 @@ int main() {
     {
         int x=0; int y=0;
         in >> x >> y;
-        xn=(-1)*x;
-        yn=(-1)*y;
+        xn=-x;
+        yn=-y;
+        double dist;
         while (in >> x >> y)
         {
                 //растояние
-                double dist;
-                if(xn !=0 && yn !=0){
-                    dist = abs(xn*x-yn*y)/sqrt(xn*xn+yn*yn);
-                }
-                else{
-                    (xn ==0)? dist =x:dist= y;
-                }
+                (xn ==0)? dist =x:(yn ==0)? dist= y : dist = abs(xn*x-yn*y)/sqrt(xn*xn+yn*yn);
                 //<0 - справа:
                 if((xn*y-yn*x)>=0 && dist>=max_d_r){
                         max_d_r=dist;
