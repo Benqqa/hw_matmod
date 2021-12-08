@@ -12,7 +12,7 @@ int main() {
     while (in >> x >> y)
     {
             //растояние
-            dist = fabs(xn*x-yn*y)/sqrt(xn*xn+yn*yn);
+            dist = fabs(yn*x-xn*y)/sqrt(xn*xn+yn*yn);
             //<0 - справа:
             if((xn*y-yn*x)<=0 && dist>=max_d_r){
                 max_d_r=dist;
