@@ -50,10 +50,10 @@ int main() {
         xn=(-1)*x;
         yn=(-1)*y;
         //std::<<  <<::endl;
+        double dist;
         while (in >> x >> y)
         {
                 //растояние
-                double dist;
                 if(xn !=0 && yn !=0){
                     dist=(abs(-1*(x)/xn+y/yn)/sqrt((1/xn)*(1/xn)+(1/yn)*(1/yn)));
 					dist = std::round(dist * 10000000000.0) / 10000000000.0;
@@ -61,49 +61,18 @@ int main() {
                 }
                 else{
                     (xn ==0)? dist =x:dist= y;
-                    /*if(xn ==0){
-                        dist= x;
-                        //dist=sqrt(pow(x-xn,2)+pow(y-yn,2)); //как растояние между 2мя точками
-                    }
-                    else{
-                        dist=y;
-                    }*/
                 }
                 //<0 - справа:
-                if(((xn-0)*(y-0)-(yn-0)*(x-0))>=0){
-                    if(dist>=max_d_r){
+                if( dist>=max_d_r && (xn*y-yn*x)<=0){
                         max_d_r=dist;
                         fx_r=x;
                         fy_r=y;
-                    }
-                    /*if(isTwiceLine_r){
-                        isTwiceLine_r= false;
-                        max_d_r=dist;
-                        fx_r=x;
-                        fy_r=y;
-                    }
-                    else{
-
-                    }*/
                 }//>0 - слева
-                else{
-                    if(dist>=max_d_l){
+                    if(dist>=max_d_l && (xn*y-yn*x)>0){
                         max_d_l=dist;
                         fx_l=x;
                         fy_l=y;
                     }
-
-                    /*if(isTwiceLine_l){
-                        isTwiceLine_l= false;
-                        max_d_l=dist;
-                        fx_l=x;
-                        fy_l=y;
-                    }
-                    else{
-                    }*/
-                }
-
-            //delete[] values;
         }
     }
     in.close();     // закрываем файл
