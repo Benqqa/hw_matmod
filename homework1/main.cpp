@@ -22,25 +22,21 @@ int main() {
                 double dist;
                 if(xn !=0 && yn !=0){
                     dist=(abs(-1*(x)/xn+y/yn)/sqrt((1/xn)*(1/xn)+(1/yn)*(1/yn)));
-					dist = std::round(dist * 10000000000.0) / 10000000000.0;
+					//dist = std::round(dist * 10000000000.0) / 10000000000.0;
                 }
                 else{
                     (xn ==0)? dist =x:dist= y;
                 }
                 //<0 - справа:
-                if(((xn-0)*(y-0)-(yn-0)*(x-0))>=0){
-                    if(dist>=max_d_r){
+                if(((xn-0)*(y-0)-(yn-0)*(x-0))>=0 && dist>=max_d_r){
                         max_d_r=dist;
                         fx_r=x;
                         fy_r=y;
-                    }
                 }//>0 - слева
-                else{
-                    if(dist>=max_d_l){
-                        max_d_l=dist;
-                        fx_l=x;
-                        fy_l=y;
-                    }
+                if( ((xn-0)*(y-0)-(yn-0)*(x-0))<0 && dist>=max_d_l){
+                    max_d_l=dist;
+                    fx_l=x;
+                    fy_l=y;
                 }
         }
     }
