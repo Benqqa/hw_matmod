@@ -11,7 +11,7 @@ int main() {
     if (in.is_open())
     {
         int x=0; int y=0;
-        in >> xn >> xn;
+        in >> xn >> yn;
         double dist;
         while (in >> x >> y)
         {
