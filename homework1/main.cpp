@@ -4,15 +4,16 @@
 
 using namespace std;
 int main() {
-    std::string line;
-    int xn,yn,fx_r,fy_r,fx_l,fy_l;
+    int xn=0,yn=0,fx_r=0,fy_r=0,fx_l=0,fy_l=0;
     double max_d_r=0;
     double max_d_l=0;
     std::ifstream in("in.txt"); // окрываем файл для чтения
     if (in.is_open())
     {
         int x=0; int y=0;
-        in >> xn >> yn;
+        in >> x >> y;
+        xn=x;
+        yn=y;
         double dist;
         while (in >> x >> y)
         {
