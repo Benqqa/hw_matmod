@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <valarray>
-
-using namespace std;
 int main() {
     int xn=0,yn=0,fx_r=0,fy_r=0,fx_l=0,fy_l=0;
     double max_d_r=0;
@@ -33,7 +31,7 @@ int main() {
                 }
         }
     }
-    in.close();     // закрываем файл
+    //in.close();     // закрываем файл
     std::cout << "Leftmost: " << fx_l << " " << fy_l << "\n";
     std::cout << "Rightmost: " << fx_r << " " << fy_r << "\n";
 
