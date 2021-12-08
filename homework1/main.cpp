@@ -11,12 +11,13 @@ int main() {
     if (in.is_open())
     {
         int x=0; int y=0;
-        in >> x >> y;
-        xn=x;
-        yn=y;
+        in >> xn >> xn;
         double dist;
         while (in >> x >> y)
         {
+                if(x==0 && y==0){
+                    continue;
+                }
                 //растояние
                 (xn ==0)? dist =x:(yn ==0)? dist= y : dist = abs(xn*x-yn*y)/sqrt(xn*xn+yn*yn);
                 //<0 - справа:
