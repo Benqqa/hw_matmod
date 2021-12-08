@@ -17,7 +17,7 @@ int main() {
                     continue;
                 }
                 //растояние
-                (xn ==0)? dist =x:(yn ==0)? dist= y : dist = fabs(xn*x-yn*y)/sqrt(xn*xn+yn*yn);
+                dist = fabs(xn*x-yn*y)/sqrt(xn*xn+yn*yn);
                 //<0 - справа:
                 if((xn*y-yn*x)<=0 && dist>=max_d_r){
                         max_d_r=dist;
