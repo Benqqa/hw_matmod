@@ -12,21 +12,19 @@ int main() {
     if (in.is_open())
     {
         int x=0; int y=0;
-        in >> x >> y;
-        xn=-x;
-        yn=-y;
+        in >> xn >> yn;
         double dist;
         while (in >> x >> y)
         {
                 //растояние
                 (xn ==0)? dist =x:(yn ==0)? dist= y : dist = abs(xn*x-yn*y)/sqrt(xn*xn+yn*yn);
                 //<0 - справа:
-                if((xn*y-yn*x)>=0 && dist>=max_d_r){
+                if((xn*y-yn*x)<=0 && dist>=max_d_r){
                         max_d_r=dist;
                         fx_r=x;
                         fy_r=y;
                 }//>0 - слева
-                if( (xn*y-yn*x)<0 && dist>=max_d_l){
+                if( (xn*y-yn*x)>0 && dist>=max_d_l){
                     max_d_l=dist;
                     fx_l=x;
                     fy_l=y;
