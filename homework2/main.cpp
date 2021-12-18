@@ -27,11 +27,11 @@ using namespace std;
     return mass_str;
 }*/
 //napr = 1 напрво - true; налево - false
-double y_tochky_vstrechy(double y_0, int napr, double v_y, double v_x, double x, double x_0, double x_d, double g, double v_0){
-    double new_t=y_0+napr*(v_y/v_x)*(x-x_0-2*x_d)-g*(pow(x-x_0-2*x_d,2)/(2*pow(v_0,2)));
+double y_tochky_vstrechy(double y_0, int napr, double v_y, double v_x, double x, double x_0, double x_d, double g){
+    double new_t=y_0+napr*(v_y/v_x)*(x-x_0-2*x_d)-g*((x-x_0-2*x_d)*(x-x_0-2*x_d)/(2*v_x*v_x));
     return std::round(new_t * 10000000000.0) / 10000000000.0;
 }
-void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int napr=1, double g=9.81, double y_0=1,double x_0=0, double x_d=0, double v_x=3, double v_y=1, double v_0=3.162277, int nomer_stolba=0){
+void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int napr=1, double g=9.81, double y_0=1,double x_0=0, double x_d=0, double v_x=3, double v_y=1, int nomer_stolba=0){
     /*if(index == 0){// первый вход - наполним массив столбов до первого пападания
 
     }
@@ -60,7 +60,8 @@ void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int
          x=atof( values[0].c_str() );
          y=atof( values[1].c_str() );*/
         //проверка столбика
-        new_y=y_tochky_vstrechy(y_0, napr, v_y,  v_x,  x,  x_0,  x_d,  g,  v_0);
+        new_y=y_tochky_vstrechy(y_0, napr, v_y,  v_x,  x,  x_0,  x_d,  g);
+        std::cout <<"Visota = "<<new_y <<" v x= "<<x<< std::endl;
         if(x==x_0){
             std::cout <<"0" << std::endl;
             break;
@@ -70,6 +71,7 @@ void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int
             break;
         }
         if(new_y<=y){ // попал
+            std::cout << "popal v "<< x<< std::endl;
             mass_stolbov_1[k-1][0]=x;
             mass_stolbov_1[k-1][1]=y;
             x_d=x-x_d; //смещение
@@ -116,7 +118,7 @@ void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int
                 }
 
                 mass_size=k;
-                polet(file_name,mass_size,mass_stolbov_2,index,napr, g, y_0, x_0,  x_d,  v_x,  v_y,  v_0, nomer_stolba);
+                polet(file_name,mass_size,mass_stolbov_2,index,napr, g, y_0, x_0,  x_d,  v_x,  v_y, nomer_stolba);
                 break;
             }
             else{
@@ -140,7 +142,7 @@ void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int
     }
     //}
 }
-void polet0(string file_name, int mass_size,double** mass_stolbov,int index=0,int napr=1, double g=9.81, double y_0=1,double x_0=0, double x_d=0, double v_x=3, double v_y=1, double v_0=3.162277, int nomer_stolba=0){
+void polet0(string file_name, int mass_size,double** mass_stolbov,int index=0,int napr=1, double g=9.81, double y_0=1,double x_0=0, double x_d=0, double v_x=3, double v_y=1,  int nomer_stolba=0){
     std::string line;
     int k= 0;
     double x,y,new_y;
@@ -160,7 +162,6 @@ void polet0(string file_name, int mass_size,double** mass_stolbov,int index=0,in
         x_d = 0; // коэф смещения
         v_x = x;//atof(values_start[0].c_str());
         v_y = y;//atof(values_start[1].c_str());
-        v_0 = sqrt(v_x*v_x + v_y*v_y);
 
         //delete[] values_start;
         if (abs(v_x) + abs(v_y) == 0) {
@@ -193,7 +194,8 @@ void polet0(string file_name, int mass_size,double** mass_stolbov,int index=0,in
             /*x = atof(values[0].c_str());
             y = atof(values[1].c_str());*/
             //проверка столбика
-            new_y = y_tochky_vstrechy(y_0, napr, v_y, v_x, x, x_0, x_d, g, v_0);
+            new_y = y_tochky_vstrechy(y_0, napr, v_y, v_x, x, x_0, x_d, g);
+        //    std::cout <<"Visota = "<<new_y <<" v x= "<<x<< std::endl;
             if (x <= x_0) {
                 std::cout << "0" << std::endl;
                 break;
@@ -203,6 +205,7 @@ void polet0(string file_name, int mass_size,double** mass_stolbov,int index=0,in
                 break;
             }
             if (new_y <= y) { // попал
+              //  std::cout << "popal v "<< x<< std::endl;
                 mass_stolbov[k - 2][0] = x;
                 mass_stolbov[k - 2][1] = y;
                 // std::cout << mass_stolbov[k - 2][0]<<" new1 " <<mass_stolbov[k - 2][1] << std::endl;
@@ -256,7 +259,7 @@ void polet0(string file_name, int mass_size,double** mass_stolbov,int index=0,in
                           std::cout << mass_stolbov_2[i][0]<<" new2 " <<mass_stolbov_2[i][1] << std::endl;
                       }*/
                     //delete[] values;
-                    polet(file_name, mass_size, mass_stolbov_2, index, napr, g, y_0, x_0, x_d, v_x, v_y, v_0,
+                    polet(file_name, mass_size, mass_stolbov_2, index, napr, g, y_0, x_0, x_d, v_x, v_y,
                           nomer_stolba);
                     break;
                 } else {
