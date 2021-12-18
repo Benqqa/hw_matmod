@@ -61,7 +61,7 @@ void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int
          y=atof( values[1].c_str() );*/
         //проверка столбика
         new_y=y_tochky_vstrechy(y_0, napr, v_y,  v_x,  x,  x_0,  x_d,  g);
-        std::cout <<"Visota = "<<new_y <<" v x= "<<x<< std::endl;
+       // std::cout <<"Visota = "<<new_y <<" v x= "<<x<< std::endl;
         if(x==x_0){
             std::cout <<"0" << std::endl;
             break;
@@ -71,7 +71,7 @@ void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int
             break;
         }
         if(new_y<=y){ // попал
-            std::cout << "popal v "<< x<< std::endl;
+          //  std::cout << "popal v "<< x<< std::endl;
             mass_stolbov_1[k-1][0]=x;
             mass_stolbov_1[k-1][1]=y;
             x_d=x-x_d; //смещение
