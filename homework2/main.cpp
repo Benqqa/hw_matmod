@@ -39,27 +39,6 @@ void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int
         std::ifstream in(file_name); // окрываем файл для чтения
         if (in.is_open()) {
             // переписать формат ввода....
-            in >> y;
-            y_0 = y;
-            x_0= 0;
-            if (x == 0 && y==0) {
-                std::cout << "0" << std::endl;
-
-            }
-
-            in >> x >> y;
-
-            x_d = 0; // коэф смещения
-            v_x = x;//atof(values_start[0].c_str());
-            v_y = y;//atof(values_start[1].c_str());
-            v_0 = sqrt(pow(v_x, 2) + pow(v_y, 2));
-
-            //delete[] values_start;
-            if (abs(v_x) + abs(v_y) == 0) {
-                std::cout << "0" << std::endl;
-
-            }
-            k=2;
             while (in >> x >> y) // перебераем столбы
             {
 
@@ -71,14 +50,27 @@ void polet(string file_name, int mass_size,double** mass_stolbov,int index=0,int
                     string *values_start = StringToMass("0 " + line, ' ', 2);
                     y_0 = atof(values_start[1].c_str());
                     x_0 = atof(values_start[0].c_str());*/
-
+                    y_0 = y;
+                    x_0= x;
                     //delete[] values_start;
-
+                    if (x == 0 && y==0) {
+                        std::cout << "0" << std::endl;
+                        break;
+                    }
                     continue;
                 }
                 if (k == 2) {
                     //string *values_start = StringToMass(line, ' ', 2);
+                    x_d = 0; // коэф смещения
+                    v_x = x;//atof(values_start[0].c_str());
+                    v_y = y;//atof(values_start[1].c_str());
+                    v_0 = sqrt(pow(v_x, 2) + pow(v_y, 2));
 
+                    //delete[] values_start;
+                    if (abs(v_x) + abs(v_y) == 0) {
+                        std::cout << "0" << std::endl;
+                        break;
+                    }
                     continue;
                 }
                 //string *values = StringToMass(line, ' ', 2);
